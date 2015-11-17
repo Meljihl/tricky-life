@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for item in luckyNumberList %}
+        <h1>Lucky Numbers: {{ item.id }}</h1>
+    {% endfor %}
+{% endblock %}
