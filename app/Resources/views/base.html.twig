@@ -5,9 +5,58 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/vendor/css/style.css') }}">
     </head>
     <body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ path('homepage') }}"><i class="fa fa-lightbulb-o fa-fw"></i>Tricky Life</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#"><i class="fa fa-home fa-fw"></i>Accueil</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list-ul fa-fw"></i> Tops <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="fa fa-arrow-circle-up fa-fw"></i> Dernières</a></li>
+                            <li><a href="#"><i class="fa fa-bomb fa-fw"></i> Meilleures</a></li>
+                            <li><a href="#"><i class="fa fa-thumbs-down fa-fw"></i> Nulles</a></li>
+                            <li><a href="#"><i class="fa fa-random fa-fw"></i> Aléatoires</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#about"><i class="fa fa-info fa-fw"></i>A propos</a></li>
+                </ul>
+                {% if is_granted('IS_AUTHENTICATED_FULLY')%}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../navbar/"><i class="fa fa-plus fa-fw"></i> Ajouter une astuce</a></li>
+                        <li><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user fa-fw"></i> Mon compte</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-power-off fa-fw"></i> Se déconnecter</a></li>
+                    </ul>
+                {% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ path("fos_user_security_login") }}"><i class="fa fa-gears fa-fw"></i> Connexion</a></li>
+                        <li><a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user fa-fw"></i> Inscription</a></li>
+                    </ul>
+                {% endif %}
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div class="container" style="margin-top: 80px;">
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    </div>
+        {% block javascripts %}
+            <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+            <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

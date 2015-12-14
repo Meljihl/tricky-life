@@ -1,7 +1,65 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% for item in luckyNumberList %}
-        <h1>Lucky Numbers: {{ item.id }}</h1>
-    {% endfor %}
+    <div class="row">
+        <div class="col-md-2">
+            <div class="panel panel-footer">
+                <strong>TOM HENIQUE</strong>
+                Age : 15 ans
+                Sexe : ?
+                Ville : Rambouillet
+            </div>
+        </div>
+        <div class="col-md-8">
+            {% for article in articleList %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">{{ article.name }}<span class="fa fa-lightbulb-o pull-right medium"></span></h4>
+                    </div>
+                    <div class="panel-body">
+                        {{ article.description }}
+                    </div>
+                    <div class="panel-footer">
+                        Panel footer
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-2">
+            <div class="panel panel-heading">
+                <strong>Filtrer les astuces</strong>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Cuisine
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Vie quotidienne
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Vie de couple
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Au travail
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Sport
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Divers
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

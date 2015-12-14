@@ -2,10 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Product;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DefaultController extends Controller
 {
@@ -14,23 +14,20 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $product = new Product();
-        $product->setName('A Foo Bar');
-        $product->setPrice('19.99');
-        $product->setDescription('Lorem ipsum dolor');
-
         $em = $this->getDoctrine()->getManager();
 
-        $em->persist($product);
-        $em->flush();
+//        $article = new Article();
+//        $article->setDescription("Quand vous marchez dans la rue, regardez par terre");
+//        $article->setName("Astuce dans la rue");
+//        $em->persist($article);
+//        $em->flush();
 
-        $repository = $em->getRepository('AppBundle:Product');
-        $numbersList = $repository->findAll();
+        $repository = $em->getRepository('AppBundle:Article');
+        $articleList = $repository->findAll();
 
         return $this->render(
             'default/index.html.twig',
-            array('luckyNumberList' => $numbersList)
+            array('articleList' => $articleList)
         );
-
     }
 }
