@@ -2,64 +2,45 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-2">
-            <div class="panel panel-footer">
-                <strong>TOM HENIQUE</strong>
-                Age : 15 ans
-                Sexe : ?
-                Ville : Rambouillet
-            </div>
-        </div>
-        <div class="col-md-8">
+        <div class="col-md-8 col-md-offset-1">
             {% for article in articleList %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">{{ article.name }}<span class="fa fa-lightbulb-o pull-right medium"></span></h4>
+                <div class="box box-solid box-default">
+                    <div class="box-header with-border">
+                        <h5 class="box-title"><i class="fa fa-lightbulb-o fa-fw"></i>{{ article.name }}</h5>
+                        <small class="pull-right"><i class="fa fa-calendar fa-fw"></i>{{ article.publishedAt|date('d-m-Y') }} | <i class="fa fa-clock-o fa-fw"></i>{{ article.publishedAt|date('H:i') }}</small>
                     </div>
-                    <div class="panel-body">
-                        {{ article.description }}
+                    <div class="box-body">
+                        {% if article.description|length > 400 %}
+                            {{ article.description|slice(0,400) ~'...' }} <a href="{{ path('details', {'articleId': article.id}) }}">(Voir la suite)</a>
+                        {% else %}
+                            {{ article.description }}
+                        {% endif %}
                     </div>
-                    <div class="panel-footer">
-                        Panel footer
+                    <div class="box-footer" id="{{ article.id }}">
+                        <a href="#" class="liked disable-a"><i class="fa fa-thumbs-up fa-fw text-blue"></i> <span class="{{ article.id }}">{{ article.liked }}</span></a>
+                        <a href="#" class="disliked disable-a"><i class="fa fa-thumbs-down fa-fw text-red"></i> <span class="{{ article.id }}">{{ article.dislike }}</span></a>
+                        <a href="{{ path('details', {'articleId': article.id}) }}" class="pull-right"><small><i class="fa fa-comment fa-fw"></i> Voir les commentaires ({{ article.commentsNumber }})</small></a>
                     </div>
                 </div>
             {% endfor %}
         </div>
         <div class="col-md-2">
-            <div class="panel panel-heading">
+            <div class="box box-info box-body">
                 <strong>Filtrer les astuces</strong>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> Cuisine
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> Vie quotidienne
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> Vie de couple
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> Au travail
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> Sport
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> Divers
-                    </label>
-                </div>
-            </div>
+                <form  method="get" class="form">
+                    {% for category in categoriesLists %}
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> {{ category.name }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-default center-block">Filtrer</button>
+                    </div>
+                </form>
 
+            </div>
         </div>
     </div>
 {% endblock %}
