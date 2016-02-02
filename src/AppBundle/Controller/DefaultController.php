@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\DTO\ArticleDTO;
 
+use AppBundle\DTO\CommentDTO;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\ArticleVotes;
 use AppBundle\Entity\Comment;
@@ -140,10 +141,21 @@ class DefaultController extends Controller
         $articleDTO = new ArticleDTO();
         $articleDTO->bind($article, count($commentsList), $votesList);
 
+        $commentsDTO = array();
+        foreach($commentsList as $comment) {
+            $commentVotes = $em->getRepository('AppBundle:CommentVotes')
+                ->findBy(array('comment' => $comment));
+
+            $commentDTO = new CommentDTO();
+            $commentDTO->bind($comment, $commentVotes);
+
+            array_push($commentsDTO, $commentDTO);
+        }
+
         return $this->render(
             'default/details.html.twig',
             array('article' => $articleDTO,
-                  'commentsList' => $commentsList)
+                  'commentsList' => $commentsDTO)
         );
     }
 
@@ -233,7 +245,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/details/{articleId}/comment/thumbsdown", name="thumbsDownComment")
+     * @Route("/comment/{commentId}/thumbsdown", name="thumbsDownComment")
      */
     public function thumbsDownCommentAction(Request $request, $commentId) {
         $em = $this->getDoctrine()->getManager();
@@ -243,6 +255,25 @@ class DefaultController extends Controller
         $votes->user = $em->getRepository('AppBundle:User')->find($this->getUser());
         $votes->comment = $em->getRepository('AppBundle:Comment')->find($commentId);
         $votes->type = 'Down';
+
+        $em->persist($votes);
+
+        $em->flush();
+
+        return new Response();
+    }
+
+    /**
+     * @Route("/comment/{commentId}/thumbsup", name="thumbsUpComment")
+     */
+    public function thumbsUpCommentAction(Request $request, $commentId) {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $votes = new CommentVotes();
+        $votes->user = $em->getRepository('AppBundle:User')->find($this->getUser());
+        $votes->comment = $em->getRepository('AppBundle:Comment')->find($commentId);
+        $votes->type = 'Up';
 
         $em->persist($votes);
 

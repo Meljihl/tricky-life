@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="box box-solid box-default">
+                <div class="box-header with-border">
+                    <h5 class="box-title"><i class="fa fa-lightbulb-o fa-fw"></i>{{ article.name }}</h5>
+                    <small class="pull-right"><i class="fa fa-calendar fa-fw"></i>{{ article.publishedAt|date('d-m-Y') }} | <i class="fa fa-clock-o fa-fw"></i>{{ article.publishedAt|date('H:i') }}</small>
+                </div>
+                <div class="box-body">
+                    {{ article.description }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-2">
+            <div class="info-box bg-blue">
+                <a href="#" class="disable-a"><span class="info-box-icon thumbup" id="{{ article.id }}"><i class="fa fa-thumbs-o-up"></i></span></a>
+                <div class="info-box-content">
+                    <span class="info-box-text">It makes me life easier</span>
+                    <span class="info-box-number liked">{{ article.liked }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-md-offset-2">
+            <div class="info-box bg-red">
+                <a href="#" class="disable-a"><span class="info-box-icon thumbdown" id="{{ article.id }}"><i class="fa fa-thumbs-o-down"></i></span></a>
+                <div class="info-box-content">
+                    <span class="info-box-text">Not working</span>
+                    <span class="info-box-number unliked">{{ article.dislike }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h3 class="text-bold text-black">Commentaires</h3>
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY')%}
+                <div class="box-header with-border">
+                    <a class="disable-a" href="{{ path('addComment', {'articleId': article.id}) }}"><button class="btn btn-block btn-toolbar">Ajouter un commentaire</button></a>
+                </div>
+            {% endif %}
+            {% if commentsList is empty %}
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        Pas de commentaires sur cette astuce.
+                    </div>
+                </div>
+            {% else %}
+                {% for comment in commentsList %}
+                    <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h5 class="box-title">{{ comment.name }}</h5>
+                                <small class="pull-right">Posté par {{ comment.user.username }}</small> <br>
+                                <small><i class="fa fa-calendar fa-fw"></i>{{ comment.publishedAt|date('d-m-Y') }} | <i class="fa fa-clock-o fa-fw"></i>{{ comment.publishedAt|date('H:i') }}</small>
+                            </div>
+                            <div class="box-body">
+                                {{ comment.description }} <br>
+                                <a href="#" class="comment-thumb-up pull-right {{ comment.id }}"><i class="fa fa-thumbs-up fa-fw"></i><span class="pull-right like {{ comment.id }}">{{ comment.liked }}</span></a>
+                                <a href="#" class="comment-thumb-down pull-right {{ comment.id }}"><i class="fa fa-thumbs-down fa-fw"></i><span class="pull-right dislike {{ comment.id }}">{{ comment.unliked }}</span></a>
+                            </div>
+                        </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

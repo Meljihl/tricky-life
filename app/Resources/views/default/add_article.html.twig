@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="box box-info col-md-3">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ajouter une astuce <small>be smart ...</small></h3>
+        </div>
+
+        <form action="{{ path('newArticle') }}" method="post" class="form">
+            <div class="form-group">
+                <label for="title" class="control-label">Titre</label>
+                <input class="form-control" type="text" id="title" name="title" required="required"/>
+            </div>
+
+            <div class="form-group">
+                <label>Catégorie</label>
+                <select name="category" class="form-control" required>
+                    <option value="" selected="selected">Faites votre choix</option>
+                    {% for category in categoriesLists %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="control-label">Votre astuce</label>
+                <textarea id="description" name="description" required="required" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="submit" name="submit" value="Ajouter" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+
+

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+
+    <div class="box box-solid box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Bienvenue <b>{{ user.username }}</b>  <small>{{ user.email }}</small></h3>
+        </div>
+        <div class="box-body with-border">
+            <div class="form-group">
+                Vous nous avez manqué ... <i class="fa fa-heart fa-fw"></i>
+
+            </div>
+        </div>
+    </div>
+        </div>
+
+    <div class="row">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Mes astuces</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body with-border">
+            <table class="table table-bordered" id="articles">
+                <tbody>
+                    <tr>
+                        <th class="text-center col-md-1">#</th>
+                        <th class="text-center col-md-7">Nom</th>
+                        <th class="text-center col-md-1"><i class="fa fa-thumbs-up fa-fw"></i></th>
+                        <th class="text-center col-md-1"><i class="fa fa-thumbs-down fa-fw"></i></th>
+                        <th class="text-center col-md-1"><i class="fa fa-comment fa-fw"></i></th>
+                        <th class="text-center col-md-1">Supprimer</th>
+                    </tr>
+
+                    {% for article in articles %}
+                        <tr class="text-center" id="{{ article.id }}">
+                            <td>{{ loop.index }}</td>
+                            <td><a href="{{ path('details', {'articleId': article.id}) }}">{{ article.name }}</a></td>
+                            <td><span class="badge bg-blue">{{ article.liked }}</span></td>
+                            <td><span class="badge bg-red">{{ article.dislike }}</span></td>
+                            <td>{{ article.commentsNumber }}</td>
+                            <td class="delete"><a><i class="fa fa-remove fa-fw"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
