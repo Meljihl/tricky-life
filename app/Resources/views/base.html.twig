@@ -25,21 +25,20 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#"><i class="fa fa-home fa-fw"></i>Accueil</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list-ul fa-fw"></i> Tops <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"><i class="fa fa-arrow-circle-up fa-fw"></i> Dernières</a></li>
-                            <li><a href="#"><i class="fa fa-bomb fa-fw"></i> Meilleures</a></li>
-                            <li><a href="#"><i class="fa fa-thumbs-down fa-fw"></i> Nulles</a></li>
-                            <li><a href="#"><i class="fa fa-random fa-fw"></i> Aléatoires</a></li>
-                        </ul>
-                    </li>
+                    <li class="active"><a href="{{ path('homepage') }}"><i class="fa fa-hand-peace-o fa-fw"></i>Dernières astuces</a></li>
+                    {#<li class="dropdown">#}
+                        {#<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list-ul fa-fw"></i> Tops <span class="caret"></span></a>#}
+                        {#<ul class="dropdown-menu">#}
+                            {#<li><a href="{{ path('homepage', {'orderBy': 'last'}) }}"><i class="fa fa-arrow-circle-up fa-fw"></i> Dernières</a></li>#}
+                            {#<li><a href="{{ path('homepage', {'orderBy': 'top'}) }}"><i class="fa fa-bomb fa-fw"></i> Meilleures</a></li>#}
+                            {#<li><a href="{{ path('homepage', {'orderBy': 'bad'}) }}"><i class="fa fa-thumbs-down fa-fw"></i> Nulles</a></li>#}
+                            {#<li><a href="{{ path('homepage', {'orderBy': 'random'}) }}"><i class="fa fa-random fa-fw"></i> Aléatoires</a></li>#}
+                        {#</ul>#}
+                    {#</li>#}
                 </ul>
                 {% if is_granted('IS_AUTHENTICATED_FULLY')%}
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{{ path('addArticle') }}"><i class="fa fa-plus fa-fw"></i> Ajouter une astuce</a></li>
-                        {#<li><a href="{{ path('user') }}"><i class="fa fa-plus fa-fw"></i> Ajouter une astuce</a></li>#}
                         <li><a href="{{ path('showUserAccount') }}"><i class="fa fa-user fa-fw"></i> Mon compte</a></li>
                         <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-power-off fa-fw"></i> Se déconnecter</a></li>
                     </ul>

@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-3 col-md-offset-2">
             <div class="info-box bg-blue">
-                <a href="#" class="disable-a"><span class="info-box-icon thumbup" id="{{ article.id }}"><i class="fa fa-thumbs-o-up"></i></span></a>
+                <a class="disable-a link-hover"><span class="info-box-icon thumbup" id="{{ article.id }}"><i class="fa fa-thumbs-o-up"></i></span></a>
                 <div class="info-box-content">
                     <span class="info-box-text">It makes me life easier</span>
                     <span class="info-box-number liked">{{ article.liked }}</span>
@@ -26,7 +26,7 @@
         </div>
         <div class="col-md-3 col-md-offset-2">
             <div class="info-box bg-red">
-                <a href="#" class="disable-a"><span class="info-box-icon thumbdown" id="{{ article.id }}"><i class="fa fa-thumbs-o-down"></i></span></a>
+                <a class="disable-a link-hover"><span class="info-box-icon thumbdown" id="{{ article.id }}"><i class="fa fa-thumbs-o-down"></i></span></a>
                 <div class="info-box-content">
                     <span class="info-box-text">Not working</span>
                     <span class="info-box-number unliked">{{ article.dislike }}</span>
@@ -59,8 +59,8 @@
                             </div>
                             <div class="box-body">
                                 {{ comment.description }} <br>
-                                <a href="#" class="comment-thumb-up pull-right {{ comment.id }}"><i class="fa fa-thumbs-up fa-fw"></i><span class="pull-right like {{ comment.id }}">{{ comment.liked }}</span></a>
-                                <a href="#" class="comment-thumb-down pull-right {{ comment.id }}"><i class="fa fa-thumbs-down fa-fw"></i><span class="pull-right dislike {{ comment.id }}">{{ comment.unliked }}</span></a>
+                                <a class="comment-thumb-up pull-right {{ comment.id }} link-hover"><i class="fa fa-thumbs-up fa-fw"></i><span class="pull-right like {{ comment.id }}">{{ comment.liked }}</span></a>
+                                <a class="comment-thumb-down pull-right {{ comment.id }} link-hover"><i class="fa fa-thumbs-down fa-fw"></i><span class="pull-right dislike {{ comment.id }}">{{ comment.unliked }}</span></a>
                             </div>
                         </div>
                 {% endfor %}

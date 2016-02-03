@@ -20,14 +20,14 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         $repository = $em->getRepository('AppBundle:Category');
         $categoriesList = $repository->findAll();
 
         $repository = $em->getRepository('AppBundle:Article');
+
         $articleList = $repository->findBy(array(), array('id' => 'DESC'));
 
         $articlesDTOList = array();
@@ -50,6 +50,7 @@ class DefaultController extends Controller
             'default/index.html.twig',
             array('articleList' => $articlesDTOList,
                 'categoriesLists' => $categoriesList,
+                'checkedCategories' => array(),
                 'selectedItem' => 'home')
         );
     }
@@ -282,4 +283,48 @@ class DefaultController extends Controller
         return new Response();
     }
 
+    /**
+     * @Route("/filteredArticles", name="filteredArticlesAction")
+     */
+    public function filteredArticlesAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $categoriesWanted = $request->get('categories');
+
+        if (empty($categoriesWanted)) {
+            return $this->redirectToRoute("homepage");
+        }
+
+
+        $repository = $em->getRepository('AppBundle:Category');
+        $categoriesList = $repository->findAll();
+        $categoriesWantedObjects = $repository->findBy(array('id'=> $categoriesWanted));
+
+        $repository = $em->getRepository('AppBundle:Article');
+        $articleList = $repository->findBy(array('category' => $categoriesWantedObjects));
+
+        $articlesDTOList = array();
+
+        foreach ($articleList as $article) {
+            // On récupère la liste des commentaires de cet article
+            $commentsList = $em->getRepository('AppBundle:Comment')
+                ->findBy(array('article' => $article));
+
+            $votesList = $em->getRepository('AppBundle:ArticleVotes')
+                ->findBy(array('article' => $article));
+
+            $articleDTO = new ArticleDTO();
+            $articleDTO->bind($article, count($commentsList), $votesList);
+
+            array_push($articlesDTOList, $articleDTO);
+        }
+
+        return $this->render(
+            'default/index.html.twig',
+            array('articleList' => $articlesDTOList,
+                'categoriesLists' => $categoriesList,
+                'checkedCategories' => $categoriesWanted,
+                'selectedItem' => 'home')
+        );
+    }
 }
